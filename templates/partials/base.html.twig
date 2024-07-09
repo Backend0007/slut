@@ -1,0 +1,55 @@
+{% include 'partials/_main.html.twig' %}
+
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Bienvenue{% endblock %} | Slut - Admin </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta content="Minimal Admin" name="description">
+        <meta content="Themesdesign" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+
+        {% block stylesheets %}{% endblock %}
+        {% include 'partials/_head-css.html.twig' %}
+
+    </head>
+{% include 'partials/_body.html.twig' %}
+        {% block body %}
+
+        <div class="group-data-[sidebar-size=sm]:min-h-sm group-data-[sidebar-size=sm]:relative">
+
+            {% include 'partials/_menu.html.twig' %}
+
+            <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
+
+                {% include 'partials/_page-wrapper.html.twig' %}
+
+                    <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+
+                        {% block content %}
+                        {% endblock %}
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                {% include 'partials/_footer.html.twig' %}
+
+            </div>
+
+        </div>
+        <!-- end main content -->
+
+
+        {% include 'partials/_customizer.html.twig' %}
+
+        {% include 'partials/_vendor-scripts.html.twig' %}
+
+        {% block javascripts %}{% endblock %}
+
+        {% endblock %}
+    </body>
+</html>
+

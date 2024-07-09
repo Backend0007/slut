@@ -1,0 +1,29 @@
+{% include 'partials/_main.html.twig' %}
+
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Bienvenue{% endblock %} | Slut - Administration</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta content="Minimal Admin & Dashboard Template" name="description">
+        <meta content="Themesdesign" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+
+        {% block stylesheets %}{% endblock %}
+        {% include 'partials/_head-css.html.twig' %}
+
+    </head>
+
+    <body>
+        {% block body %}
+
+            {% block content %}{% endblock %}
+
+        {% include 'partials/_vendor-scripts.html.twig' %}
+
+        {% block javascripts %}{% endblock %}
+
+        {% endblock %}
+    </body>
+</html>

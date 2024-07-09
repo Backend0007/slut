@@ -1,0 +1,33 @@
+{% extends 'partials/base.html.twig' %}
+{% block title %}Video Player{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="assets/libs/plyr/plyr.css">
+{% endblock %}
+{% block content %}
+
+            {{ component('breadcrumb', { pagetitle: 'Plugins', title: 'Video Player' }) }}
+
+                <div>
+                    <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-4 text-gray-800 text-15 dark:text-white">Preview Video Player</h6>
+                            
+                                <div class="plyr__video-embed" id="player">
+                                    <iframe src="https://www.youtube.com/embed/qYgogv4R8zg?si=_YxUDmc2fDgHyPae" allowfullscreen allowtransparency allow="autoplay"></iframe>
+                                </div>
+                            </div>
+                        </div><!--end card-->
+                    </div><!--end grid-->
+                </div>
+         
+{% endblock %}
+    
+{% block javascripts %}
+<script src="assets/libs/plyr/plyr.min.js"></script>
+<script src="assets/js/pages/plugins-video-player.init.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+    
+{% endblock %}
