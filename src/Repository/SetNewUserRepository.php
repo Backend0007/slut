@@ -41,8 +41,9 @@ class SetNewUserRepository
             $user->setLastName($request->request->get('lastName'));
             $user->setEmail($request->request->get('email'));
 
-            $password = $request->request->get('password');
-            $rePassword = $request->request->get('re-password');
+           $password = $request->request->get('password');
+           $rePassword = $request->request->get('re-password');
+           
 
             if ($password !== $rePassword) {
                 return $message_red = 'Les mots de passe ne correspondent pas.';
@@ -51,6 +52,7 @@ class SetNewUserRepository
             $user->setPassword($this->hasher->hashPassword($user, $password));
             $user->setPhoneNumber($request->request->get('telephone'));
             $user->setPrivilege($request->request->get('status'));
+            $user->setService($request->request->get('service'));
             $user->setRoles([$request->request->get('privilege')]);
             $user->setAgency($request->request->get('agency'));
             $user->setProvince($request->request->get('province'));
@@ -69,6 +71,15 @@ class SetNewUserRepository
             } else {
                 $user->setConditions($conditions);
             }
+
+           $date = new \DateTime();
+           $user->setDateOfInscription($date->format('Y-m-d'));
+
+           $hour = new \DateTime();
+           $user->setHourOfInscription($hour->format('H:i:s'));
+
+
+
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
