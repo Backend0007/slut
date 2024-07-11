@@ -288,13 +288,16 @@
                 </div>
 
  <div class="mb-3">
-                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Privilege<span class="text-red-500">*</span></label>
-                    <select name="privilege" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Roles<span class="text-red-500">*</span></label>
+                    <select name="privilege" data-choices data-choices-removeItem multiple class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
                                           <option selected="" disabled="" value="">Choisir...</option>
                                         <option value="ROLE_USER">Utilisateur</option>
                                         <option value="ROLE_manager">Manageur</option>
                                         <option value="ROLE_ADMIN">Administrateur</option>
                                         <option value="ROLE_SUPER_ADMIN">Super administrateur</option>
+                                        <option value="ROLE_DEV">Développeur</option>
+                                        <option value="ROLE_INFORMATIQUE ">Informatique</option>
+                                        
                     </select>
                 </div>
  <div class="mb-3">
