@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-use App\Repository\GetUserManagementService;
+use App\Service\RestrictedService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,8 +13,14 @@ use App\Service\GetUserManagementService as ServiceGetUserManagementService;
 class UserManagementController extends AbstractController
 {
     #[Route('/user_management', name: 'app_user_management')]
-    public function index(Request $request, ServiceGetUserManagementService $getManagementConnectedService): Response
+    public function index(Request $request, ServiceGetUserManagementService $getManagementConnectedService, RestrictedService $restricted): Response
     {
+        if($restricted->restricted() === true) {
+            return $this->redirectToRoute('app_logout');
+        };
+
+
+
    
         $messageReturn = "";
         $hidden = "hidden";
@@ -59,9 +65,14 @@ class UserManagementController extends AbstractController
 
 
     #[Route('/user_management_profil', name: 'app_user_management_profil')]
-    public function indexUserAccount(Request $request, ServiceGetUserManagementService $getManagementConnectedService): Response
+    public function indexUserAccount(Request $request, ServiceGetUserManagementService $getManagementConnectedService, RestrictedService $restricted): Response
     {
-   
+        if($restricted->restricted() === true) {
+            return $this->redirectToRoute('app_logout');
+        };
+        
+
+
         
 
          $userSelected = $getManagementConnectedService->_getUserManagementFromServiceById($request->request->get('id'));

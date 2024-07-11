@@ -2,24 +2,33 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use Symfony\Component\Uid\Uuid;
+use App\Service\RestrictedService;
 use App\Service\SetNewUserService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class FormController extends AbstractController
 {
     #[Route('/form', name: 'app_register')]
     #[IsGranted('ROLE_USER')]
-    public function index(): Response
+    public function index(RestrictedService $restricted): Response
     {
+        if($restricted->restricted() === true) {
+            return $this->redirectToRoute('app_logout');
+        };
+
+
+
+
+
+
+
+
+
         $message_red = '';
         $message_green = '';
         return $this->render('form/forms-validation.html.twig', [
@@ -35,8 +44,15 @@ class FormController extends AbstractController
 
     #[Route('/nouveau_utilisateur', name: 'app_register_new')]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, SetNewUserService $setNewUserservice): Response
+    public function new(Request $request, SetNewUserService $setNewUserservice, RestrictedService $restricted): Response
     {
+        if($restricted->restricted() === true) {
+            return $this->redirectToRoute('app_logout');
+        };
+
+
+
+
         $notification = $setNewUserservice->_setNewUserServ($request);
         
        
@@ -46,10 +62,19 @@ class FormController extends AbstractController
         ]);
     }
 
+
+
+
     #[Route('/nouveau_utilisateur_management', name: 'app_register_new_from_management')]
     #[IsGranted('ROLE_USER')]
-    public function newFromManagement(Request $request, SetNewUserService $setNewUserservice): Response
+    public function newFromManagement(Request $request, SetNewUserService $setNewUserservice, RestrictedService $restricted): Response
     {
+        if($restricted->restricted() === true) {
+            return $this->redirectToRoute('app_logout');
+        };
+
+
+
         $notification = $setNewUserservice->_setNewUserServ($request);
         
        

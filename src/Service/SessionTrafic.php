@@ -6,9 +6,7 @@ use DateTime;
 
 use App\Entity\User;
 use App\Entity\SessionOn;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Entity;
-use Symfony\Component\Security\Core;
+use App\Repository\SessionOnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -17,14 +15,16 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class SessionTrafic extends ServiceEntityRepository
 {
 
-    private $entityManager;
-    private $security;
+    private EntityManagerInterface $entityManager;
+    private Security $security;
+    private SessionOnRepository $userRepository;
 
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security, SessionOnRepository $sessionOnRepository)
     {
         parent::__construct($registry, SessionOn::class);
         $this->entityManager = $entityManager;
         $this->security = $security;
+        $this->userRepository = $sessionOnRepository;
     }
 
     public function setSession()
@@ -34,17 +34,24 @@ class SessionTrafic extends ServiceEntityRepository
             $sessionOn = new SessionOn();
             $time = new \DateTime();
             $timeCurrent = $time->format('d/m/Y');
-           
-            $hour = new \DateTime();
             $hourCurrent = $time->format('H:i:s');
 
+            $is_Already = $this->userRepository->findOneby(['idUser' => $user->getIdUser()]);
+            if ($is_Already != null) {
 
-            $sessionOn->setidUser($user->getIdUser());
-            $sessionOn->setDateStarted($timeCurrent);
-            $sessionOn->sethourStarted($hourCurrent);
+                
+            } else {
+                $sessionOn = new SessionOn();
 
-            $this->entityManager->persist($sessionOn);
-            $this->entityManager->flush();
+                $sessionOn->setidUser($user->getIdUser());
+                $sessionOn->setDateStarted($timeCurrent);
+                $sessionOn->sethourStarted($hourCurrent);
+    
+                $this->entityManager->persist($sessionOn);
+                $this->entityManager->flush();
+            }
+
+                
         }
     }
 
