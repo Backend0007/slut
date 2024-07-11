@@ -65,6 +65,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $conditions = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $service = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $dateOfInscription = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $hourOfInscription = null;
+
    
 
     public function getId(): ?int
@@ -258,6 +267,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConditions(string $conditions): static
     {
         $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    public function getService(): ?string
+    {
+        return $this->service;
+    }
+
+    public function setService(string $service): static
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    public function getDateOfInscription(): ?string
+    {
+        return $this->dateOfInscription;
+    }
+
+    public function setDateOfInscription(string $dateOfInscription): static
+    {
+        $this->dateOfInscription = $dateOfInscription;
+
+        return $this;
+    }
+
+    public function getHourOfInscription(): ?string
+    {
+        return $this->hourOfInscription;
+    }
+
+    public function setHourOfInscription(string $hourOfInscription): static
+    {
+        $this->hourOfInscription = $hourOfInscription;
 
         return $this;
     }

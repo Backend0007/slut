@@ -1,0 +1,369 @@
+{% extends 'partials/base.html.twig' %}
+{% block title %}Gestion utilisateur{% endblock %}
+
+{% block content %}
+
+
+                <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+                    <div class="xl:col-span-12">
+                        <div class="card" id="usersTable">
+                            <div class="card-body">
+                                <div class="flex items-center">
+                                    <h6 class="text-15 grow">Gestionnaire d'utilisateur</h6>
+                                    <div class="shrink-0">
+                                        <button data-modal-target="addUserModal" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Ajouter utilisateur</span></button>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="!py-3.5 card-body border-y border-dashed border-slate-200 dark:border-zink-500">
+                                <form action="#!">
+                                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
+                                        <div class="relative xl:col-span-2">
+                                            <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Recherche .." autocomplete="off">
+                                            <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
+                                        </div><!--end col-->
+                                        <div class="xl:col-span-2">
+                                            <select class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-choices id="choices-single-default">
+                                                <option value="">Select Status</option>
+                                                <option value="Verified">Verified</option>
+                                                <option value="Waiting">Waiting</option>
+                                                <option value="Rejected">Rejected</option>
+                                                <option value="Hidden">Hidden</option>
+                                            </select>
+                                        </div><!--end col-->
+                                        <div class="xl:col-span-3 xl:col-start-10">
+                                            <div class="flex gap-2 xl:justify-end">
+                                                <div>
+                                                    <button type="button" class="bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20"><i data-lucide="download" class="inline-block size-4"></i> <span class="align-middle">Import</span></button>
+                                                </div>
+                                                <button class="flex items-center justify-center size-[37.5px] p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i data-lucide="sliders-horizontal" class="size-4"></i></button>
+                                            </div>
+                                        </div><!--end col-->
+                                    </div><!--end grid-->
+                                </form>
+                            </div>
+                            <div class="card-body">
+                                <div class="-mx-5 -mb-5 overflow-x-auto">
+                                    <table class="w-full border-separate table-custom border-spacing-y-1 whitespace-nowrap">
+                                        <thead class="text-left">
+                                            <tr class="relative rounded-md bg-slate-100 dark:bg-zink-600 after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600">
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">
+                                                    <div class="flex items-center h-full">
+                                                        <input id="CheckboxAll" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer" type="checkbox">
+                                                    </div>
+                                                </th>
+                                         
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="name"></th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="name">Nom</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="location">Service</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="email">Email</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="phone-number">Telephone</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="joining-date">Date d'inscription</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="joining-date">Heure d'inscription</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold sort" data-sort="status">Status</th>
+                                                <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                            <tr class="relative rounded-md after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600">
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                                    <div class="flex items-center h-full">
+                                                        <input id="Checkbox1" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer" type="checkbox">
+                                                    </div>
+                                                </td>
+                                               
+                                               
+                                               
+                        
+                                               {% for user in user_management  %}
+                                               
+                                               
+                                                <td  class="px-3.5 py-2.5 first:pl-5 last:pr-5"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id"></a></td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                                
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="flex items-center justify-center size-10 font-medium rounded-full shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
+                                                            <img src="assets/images/users/{{user.user.photo}}" alt="" class="h-10 rounded-full">
+                                                        </div>
+                                                        <div class="grow">
+                                                            <h6 class="mb-1"><a href="#!" class="name">{{user.user.firstName}} {{user.user.lastName}}</a></h6>
+                                                            <p class="text-slate-500 dark:text-zink-200">{{user.user.privilege}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 location">{{user.user.service}}</td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 email">{{user.user.email}}</td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 phone-number">{{user.user.phoneNumber}}</td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 joining-date">{{user.dateOfInscription}}</td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 joining-date">{{user.user.hourOfInscription}}</td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5"><span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent inline-flex items-center status"><i data-lucide="check-circle" class="size-3 mr-1.5"></i> Verified</span></td>
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                                    <div class="relative dropdown">
+                                                        <button class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20" id="usersAction1" data-bs-toggle="dropdown"><i data-lucide="more-horizontal" class="size-3"></i></button>
+                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="usersAction1">
+                                                            <li>
+                                                               <form action="{{path('app_user_management_profil')}}" method="post">
+                                                                <button type="submit" class=" block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="pages-account"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Consulter</span></button>
+                                                                 <input name="id" type="hidden" value="{{user.user.idUser}}">
+                                                                 </form>
+                                                            </li>
+                                                            <li>
+                                                                <a data-modal-target="addUserModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Modifier</span></a>
+                                                            </li>
+                                                            <li>
+                                                                <a data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Supprimer</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="relative rounded-md after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 active dark:[&.active]:bg-zink-600">
+                                                <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                                    <div class="flex items-center h-full">
+                                                        <input id="Checkbox2" class="size-4 bg-white border border-slate-200 checked:bg-none dark:bg-zink-700 dark:border-zink-500 rounded-sm appearance-none arrow-none relative after:absolute after:content-['\eb7b'] after:top-0 after:left-0 after:font-remix after:leading-none after:opacity-0 checked:after:opacity-100 after:text-custom-500 checked:border-custom-500 dark:after:text-custom-500 dark:checked:border-custom-800 cursor-pointer" type="checkbox" checked>
+                                                    </div>
+                                                </td>
+
+                                       {% endfor %}
+
+
+
+                                               
+
+
+
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="noresult" style="display: none">
+                                        <div class="py-6 text-center">
+                                            <i data-lucide="search" class="size-6 mx-auto text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
+                                            <h5 class="mt-2">Désolé, non trouvé</h5>
+                                            <p class="mb-0 text-slate-500 dark:text-zink-200">Désolé, nous n'avons pas trouvé.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-8 md:flex-row">
+                                    <div class="mb-4 grow md:mb-0">
+                                        <p class="text-slate-500 dark:text-zink-200">Montrer <b>10</b> de <b>57</b> Resultat</p>
+                                    </div>
+                                    <ul class="flex flex-wrap items-center gap-2">
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i class="size-4 rtl:rotate-180" data-lucide="chevrons-left"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i class="size-4 rtl:rotate-180" data-lucide="chevron-left"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto active">3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">4</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">6</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i class="size-4 rtl:rotate-180" data-lucide="chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#!" class="inline-flex items-center justify-center bg-white dark:bg-zink-700 size-8 transition-all duration-150 ease-linear border border-slate-200 dark:border-zink-500 rounded text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-50 dark:[&.active]:text-custom-50 [&.active]:bg-custom-500 dark:[&.active]:bg-custom-500 [&.active]:border-custom-500 dark:[&.active]:border-custom-500 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i class="size-4 rtl:rotate-180" data-lucide="chevrons-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end grid-->
+
+        
+
+
+
+<div id="addUserModal" modal-center class="fixed {{lock}} flex flex-col {{hidden}} transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 {{show}} ">
+
+    <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+        <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+            <h5 class="text-16">Créer utilisateur</h5>
+
+{% if lock == "fondu-form-back" %}
+  
+  <a href="{{path('app_user_management')}}" data-modal-close="addDocuments" class="text-red-500 transition-all duration-200 ease-linear bg-white border-white btn hover:text-red-600 focus:text-red-600 active:text-red-600 dark:bg-zink-500 dark:border-zink-500"><i data-lucide="x" class="size-5"></i></a>
+    
+{% else %}
+    <button data-modal-close="addUserModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500">
+        <i data-lucide="x" class="size-5"></i>
+    </button>
+{% endif %}
+
+
+        </div>
+        <div class="flex items-center justify-between p-4 border-b dark:border-zink-300/20">
+            
+            {% if message_return is defined and message_return is not empty and message_return is same as("Utilisateur enregistré avec succès.") %}
+    <br>
+    <div class="px-4 py-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+        <span class="font-bold">Succès :</span> {{ message_return }}
+    </div>
+    <br>
+{% endif %}
+
+
+                            {% if message_return is defined and message_return is not empty and message_return != "Utilisateur enregistré avec succès." %}
+    <br>
+    <div class="flex gap-1 px-4 py-3 text-sm text-red-500 border border-red-200 rounded-md md:items-center bg-red-50 dark:bg-red-400/20 dark:border-red-500/50">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" class="lucide lucide-alert-circle h-4">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" x2="12" y1="8" y2="12"></line>
+            <line x1="12" x2="12.01" y1="16" y2="16"></line>
+        </svg>
+        <span class="font-bold">Erreur :</span> {{ message_return }}.
+    </div>
+    <br>
+{% endif %}
+
+
+            <button data-modal-close="addUserModal" class="transition-all duration-200 ease-linear text-slate-400 hover:text-red-500"><i data-lucide="" class="size-5"></i></button>
+        </div>
+        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+            <form action="{{path('app_register_new_from_management')}}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="userId" class="inline-block mb-2 text-base font-medium">Nom<span class="text-red-500">*</span></label>
+                    <input name ="firstName" type="text" id="userId" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"  value="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="joiningDateInput" class="inline-block mb-2 text-base font-medium">Prénom<span class="text-red-500">*</span></label>
+                    <input name="lastName" type="text" id="joiningDateInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" >
+                </div>
+                <div class="mb-3">
+                    <label for="userNameInput" class="inline-block mb-2 text-base font-medium">Adresse Email<span class="text-red-500">*</span></label>
+                    <input name="email" type="text" id="userNameInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="inline-block mb-2 text-base font-medium">Password<span class="text-red-500">*</span></label>
+                    <input name="password" type="password" id="emailInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="inline-block mb-2 text-base font-medium">Confirmer password<span class="text-red-500">*</span></label>
+                    <input name="re-password"  type="password" id="emailInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumberInput" class="inline-block mb-2 text-base font-medium">Télephone<span class="text-red-500">*</span></label>
+                    <input name="telephone" type="text" id="phoneNumberInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Status<span class="text-red-500">*</span></label>
+                    <select name="status" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                                       <option selected="" disabled="" value="">Choisir...</option>
+                                        <option value="Employé">Employé</option>
+                                        <option value="Manageur_Informatique">Manageur Informatique</option>
+                                        <option value="Directeur_Informatique">Directeur Informatique</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Service<span class="text-red-500">*</span></label>
+                    <select name="service" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                                       <option selected="" disabled="" value="">Choisir...</option>
+                                        <option value="Management">Management</option>
+                                        <option value="Informatique">Informatique</option>
+                                        <option value="Ressources_Humaine">Ressources Humaine</option>
+                                        <option value="Direction_Informatique">Direction Informatique</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="locationInput" class="inline-block mb-2 text-base font-medium">Photo<span class="text-red-500">*</span></label>
+                    <input name="photo" type="file" id="locationInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                </div>
+
+ <div class="mb-3">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Privilege<span class="text-red-500">*</span></label>
+                    <select name="privilege" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                                          <option selected="" disabled="" value="">Choisir...</option>
+                                        <option value="ROLE_USER">Utilisateur</option>
+                                        <option value="ROLE_manager">Manageur</option>
+                                        <option value="ROLE_ADMIN">Administrateur</option>
+                                        <option value="ROLE_SUPER_ADMIN">Super administrateur</option>
+                    </select>
+                </div>
+ <div class="mb-3">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Agence<span class="text-red-500">*</span></label>
+                    <select name="agency" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                                          <option selected="" disabled="" value="">Choisir...</option>
+                                        <option value="Gombe">Gombe</option>
+                                      
+                    </select>
+                </div>
+ <div class="mb-3">
+                    <label for="statusSelect" class="inline-block mb-2 text-base font-medium">Province<span class="text-red-500">*</span></label>
+                    <select name="province" class="form-input border-slate-300 focus:outline-none focus:border-custom-500" data-choices data-choices-search-false name="statusSelect" id="statusSelect">
+                                          <option selected="" disabled="" value="">Choisir...</option>
+                                        <option value="Kinshasa">Kinshasa</option>
+                                  
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                                    <input name="conditions" id="termsCondition" class="size-4 border rounded-sm appearance-none bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" type="checkbox">
+                                    <label for="termsCondition" class="text-sm align-top text-slate-400">En cochant ce bouton par Slut vous acceptez <a href="#!" class="underline text-custom-500">Conditions d'utilisation</a></label>
+                                    <p id="termsError" class="mt-1 text-sm text-red-500"></p>
+                                </div>
+
+
+
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="reset" data-modal-close="addDocuments" class="text-red-500 transition-all duration-200 ease-linear bg-white border-white btn hover:text-red-600 focus:text-red-600 active:text-red-600 dark:bg-zink-500 dark:border-zink-500">Abandonner</button>
+                    <button type="submit" class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!--end add user-->
+
+
+<div id="deleteModal" modal-center class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+    <div class="w-screen md:w-[25rem] bg-white shadow rounded-md dark:bg-zink-600">
+        <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto px-6 py-8">
+            <div class="float-right">
+                <button data-modal-close="deleteModal" class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500"><i data-lucide="x" class="size-5"></i></button>
+            </div>
+            <img src="assets/images/delete.png" alt="" class="block h-12 mx-auto">
+            <div class="mt-5 text-center">
+                <h5 class="mb-1">Etês vous sûre ?</h5>
+                <p class="text-slate-500 dark:text-zink-200">Etês vous sûre de vouloir supprimer ?</p>
+                <div class="flex justify-center gap-2 mt-6">
+                    <button type="reset" data-modal-close="deleteModal" class="bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-600 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10">Abandonner</button>
+                    <button type="submit" class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20">Oui, Supprimer!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+    
+{% block javascripts %}
+
+<!-- list js-->
+<script src="assets/libs/list.js/list.min.js"></script>
+<script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
+
+<!-- User list init js -->
+<script src="assets/js/pages/apps-user-list.init.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+
+{% endblock %}

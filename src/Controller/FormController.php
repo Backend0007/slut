@@ -46,6 +46,22 @@ class FormController extends AbstractController
         ]);
     }
 
+    #[Route('/nouveau_utilisateur_management', name: 'app_register_new_from_management')]
+    #[IsGranted('ROLE_USER')]
+    public function newFromManagement(Request $request, SetNewUserService $setNewUserservice): Response
+    {
+        $notification = $setNewUserservice->_setNewUserServ($request);
+        
+       
+        return $this->redirectToRoute('app_user_management', [
+            'message_return' => $notification,
+            'hidden' => true,
+            'show' => true,
+            'lock' => true,
+        ]);
+    
+    }
+
 
 
 }
